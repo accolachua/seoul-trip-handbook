@@ -1,9 +1,26 @@
 const MEMBERS = ['熊', '熊大仙', 'Heidi', '陈汇聪', 'Ava'];
 const ALLOWED_TYPES = new Set(['todos', 'shopping', 'expenses']);
-const JSON_HEADERS = { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' };
+const ALLOWED_ORIGINS = new Set([
+  'https://bytedance.doubaoapps.com',
+  'https://seoul-trip-handbook.604107556.workers.dev'
+]);
 
-function response(data, status = 200) {
-  return new Response(JSON.stringify(data), { status, headers: JSON_HEADERS });
+function corsHeaders(request) {
+  const origin = request.headers.get('origin') || '';
+  const headers = {
+    'content-type': 'application/json; charset=utf-8',
+    'cache-control': 'no-store',
+    'access-control-allow-methods': 'GET,POST,DELETE,OPTIONS',
+    'access-control-allow-headers': 'Content-Type,X-Edit-Password',
+    'access-control-max-age': '86400',
+    'vary': 'Origin'
+  };
+  if (ALLOWED_ORIGINS.has(origin)) headers['access-control-allow-origin'] = origin;
+  return headers;
+}
+
+function response(data, status = 200, request) {
+  return new Response(JSON.stringify(data), { status, headers: corsHeaders(request) });
 }
 
 async function readList(env, type) {
@@ -13,7 +30,7 @@ async function readList(env, type) {
 async function requireAuth(request, env) {
   const password = request.headers.get('x-edit-password') || '';
   if (!env.EDIT_PASSWORD || password !== env.EDIT_PASSWORD) {
-    return response({ ok: false, error: '编辑密码错误' }, 401);
+    return response({ ok: false, error: '编辑密码错误' }, 401, request);
   }
   return null;
 }
@@ -62,19 +79,28 @@ async function exchangeRates(env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const origin = request.headers.get('origin') || '';
+    if (request.method === 'OPTIONS') {
+      if (origin && !ALLOWED_ORIGINS.has(origin)) return new Response(null, { status: 403 });
+      return new Response(null, { status: 204, headers: corsHeaders(request) });
+    }
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
 
+    if (url.pathname === '/api/auth' && request.method === 'POST') {
+      const authError = await requireAuth(request, env);
+      return authError || response({ ok: true }, 200, request);
+    }
     if (url.pathname === '/api/config' && request.method === 'GET') {
-      return response({ ok: true, members: MEMBERS, baseCurrency: 'CNY' });
+      return response({ ok: true, members: MEMBERS, baseCurrency: 'CNY' }, 200, request);
     }
     if (url.pathname === '/api/rates' && request.method === 'GET') {
-      return response({ ok: true, rates: await exchangeRates(env) });
+      return response({ ok: true, rates: await exchangeRates(env) }, 200, request);
     }
     const match = url.pathname.match(/^\/api\/(todos|shopping|expenses)(?:\/([^/]+))?$/);
-    if (!match || !ALLOWED_TYPES.has(match[1])) return response({ ok: false, error: 'Not found' }, 404);
+    if (!match || !ALLOWED_TYPES.has(match[1])) return response({ ok: false, error: 'Not found' }, 404, request);
     const type = match[1];
     const id = match[2];
-    if (request.method === 'GET' && !id) return response({ ok: true, items: await readList(env, type) });
+    if (request.method === 'GET' && !id) return response({ ok: true, items: await readList(env, type) }, 200, request);
 
     const authError = await requireAuth(request, env);
     if (authError) return authError;
@@ -85,28 +111,28 @@ export default {
       let item;
       if (type === 'todos') {
         const text = safeText(input.text);
-        if (!text) return response({ ok: false, error: '请输入待办内容' }, 400);
+        if (!text) return response({ ok: false, error: '请输入待办内容' }, 400, request);
         item = { id: crypto.randomUUID(), text, note: safeText(input.note), status: '待办', createdAt: Date.now() };
       } else if (type === 'shopping') {
         const product = safeText(input.product);
-        if (!product) return response({ ok: false, error: '请输入商品名称' }, 400);
+        if (!product) return response({ ok: false, error: '请输入商品名称' }, 400, request);
         item = { id: crypto.randomUUID(), brand: safeText(input.brand, 80), product, purpose: safeText(input.purpose), price: safeText(input.price, 80), channel: safeText(input.channel), createdAt: Date.now() };
       } else {
         const error = validateExpense(input);
-        if (error) return response({ ok: false, error }, 400);
+        if (error) return response({ ok: false, error }, 400, request);
         item = { id: crypto.randomUUID(), date: safeText(input.date, 20), category: safeText(input.category, 60), description: safeText(input.description), amount: Number(input.amount), currency: safeText(input.currency, 6), rate: Number(input.rate), payer: input.payer, shares: input.shares.map(row => ({ member: row.member, amount: Number(row.amount) })), createdAt: Date.now() };
       }
       list.unshift(item);
       await env.SHARED_DATA.put(type, JSON.stringify(list));
-      return response({ ok: true, item }, 201);
+      return response({ ok: true, item }, 201, request);
     }
 
     if (request.method === 'DELETE' && id) {
       const next = list.filter(item => item.id !== id);
-      if (next.length === list.length) return response({ ok: false, error: '记录不存在' }, 404);
+      if (next.length === list.length) return response({ ok: false, error: '记录不存在' }, 404, request);
       await env.SHARED_DATA.put(type, JSON.stringify(next));
-      return response({ ok: true });
+      return response({ ok: true }, 200, request);
     }
-    return response({ ok: false, error: 'Method not allowed' }, 405);
+    return response({ ok: false, error: 'Method not allowed' }, 405, request);
   }
 };
