@@ -2,7 +2,8 @@ const MEMBERS = ['熊', '熊大仙', 'Heidi', '陈汇聪', 'Ava'];
 const ALLOWED_TYPES = new Set(['todos', 'shopping', 'expenses']);
 const ALLOWED_ORIGINS = new Set([
   'https://bytedance.doubaoapps.com',
-  'https://seoul-trip-handbook.604107556.workers.dev'
+  'https://seoul-trip-handbook.604107556.workers.dev',
+  'https://dev-d8gxdqvok64864d6d-1454994890.tcloudbaseapp.com'
 ]);
 
 function corsHeaders(request) {
