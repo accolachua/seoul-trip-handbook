@@ -409,7 +409,7 @@
       function renderShopping(){document.getElementById('shoppingList').innerHTML=shoppingData.map(x=>`<article class="shop-card" data-search="${x.join(' ')}"><div class="brand">${x[0]}</div><h3>${x[1]}</h3><dl><dt>作用</dt><dd>${x[2]}</dd><dt>产品图</dt><dd>待补图片</dd><dt>价格</dt><dd>${x[1].includes('Caramel Glaze')?'约₩10,000+':'现场确认'}</dd><dt>渠道</dt><dd>Olive Young/品牌门店，库存现场确认</dd></dl></article>`).join('');const s=document.getElementById('shoppingSearch');s.addEventListener('input',()=>document.querySelectorAll('.shop-card').forEach(c=>c.classList.toggle('hidden',!c.dataset.search.toLowerCase().includes(s.value.trim().toLowerCase()))));}
       function renderNotices(){document.getElementById('noticeList').innerHTML=noticeData.map(x=>`<article class="notice-card"><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join('');}
       const members=['熊','熊大仙','Heidi','陈汇聪','Ava'];
-      const API_BASE=location.hostname==='seoul-trip-handbook.604107556.workers.dev'?'':'https://seoul-trip-handbook.604107556.workers.dev';
+      const API_BASE=(location.hostname==='seoul-trip-handbook.604107556.workers.dev'||location.hostname.endsWith('.edgeone.dev')||location.hostname.endsWith('.edgeone.site'))?'':'https://seoul-trip-handbook.604107556.workers.dev';
       let editPassword='';
       let currentRates={CNY:1,KRW:0.0052,HKD:0.92,USD:7.1,EUR:7.8};
       const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
