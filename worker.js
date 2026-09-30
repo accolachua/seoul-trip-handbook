@@ -23,8 +23,38 @@ function response(data, status = 200, request) {
   return new Response(JSON.stringify(data), { status, headers: corsHeaders(request) });
 }
 
+function normalizeExpenseRecord(item) {
+  const row = { ...item, shares: Array.isArray(item.shares) ? item.shares.map(s => ({ ...s, amount: Number(s.amount) })) : [] };
+  let changed = false;
+  if (row.currency === 'CNY' && Number(row.amount) === 1 && Number(row.rate) > 100) {
+    row.amount = Number(row.rate);
+    row.rate = 1;
+    changed = true;
+  }
+  const totalCents = Math.round(Number(row.amount) * Number(row.rate) * 100);
+  const sharesCents = row.shares.map(s => Math.round(Number(s.amount) * 100));
+  let diff = totalCents - sharesCents.reduce((sum, cents) => sum + cents, 0);
+  if (diff !== 0) changed = true;
+  const preferred = Math.max(0, row.shares.findIndex(s => s.member === row.payer));
+  if (diff !== 0 && sharesCents[preferred] + diff >= 0) {
+    sharesCents[preferred] += diff;
+    diff = 0;
+  }
+  row.shares = row.shares.map((s, i) => ({ ...s, amount: sharesCents[i] / 100 }));
+  return { row, changed };
+}
+
 async function readList(env, type) {
-  return (await env.SHARED_DATA.get(type, 'json')) || [];
+  const list = (await env.SHARED_DATA.get(type, 'json')) || [];
+  if (type !== 'expenses') return list;
+  let changed = false;
+  const normalized = list.map(item => {
+    const result = normalizeExpenseRecord(item);
+    changed ||= result.changed;
+    return result.row;
+  });
+  if (changed) await env.SHARED_DATA.put(type, JSON.stringify(normalized));
+  return normalized;
 }
 
 async function requireAuth(request, env) {
@@ -44,11 +74,12 @@ function validateExpense(input) {
   const rate = Number(input.rate);
   if (!Number.isFinite(amount) || amount <= 0) return '金额必须大于 0';
   if (!Number.isFinite(rate) || rate <= 0) return '汇率必须大于 0';
+  if (safeText(input.currency, 6) === 'CNY' && Math.abs(rate - 1) > 0.000001) return '人民币账目的汇率必须为 1';
   if (!MEMBERS.includes(input.payer)) return '付款人无效';
   if (!Array.isArray(input.shares) || !input.shares.length) return '至少选择一位参与人';
-  const totalShares = input.shares.reduce((sum, row) => sum + Number(row.amount || 0), 0);
-  const cny = amount * rate;
-  if (Math.abs(totalShares - cny) > 0.02) return '分摊金额合计必须等于折算后的人民币金额';
+  const totalSharesCents = input.shares.reduce((sum, row) => sum + Math.round(Number(row.amount || 0) * 100), 0);
+  const cnyCents = Math.round(amount * rate * 100);
+  if (totalSharesCents !== cnyCents) return '分摊金额合计必须精确等于折算后的人民币金额';
   if (input.shares.some(row => !MEMBERS.includes(row.member) || Number(row.amount) < 0)) return '参与人或分摊金额无效';
   return '';
 }
