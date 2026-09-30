@@ -414,7 +414,7 @@
       let currentRates={CNY:1,KRW:0.0052,HKD:0.92,USD:7.1,EUR:7.8};
       const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
       function notify(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
-      async function api(path,options={}){const headers={'content-type':'application/json',...(options.headers||{})};if(editPassword)headers['x-edit-password']=editPassword;const res=await fetch(API_BASE+path,{...options,headers});const data=await res.json();if(!res.ok)throw new Error(data.error||'操作失败');return data;}
+      async function api(path,options={}){const headers={'content-type':'application/json',...(options.headers||{})};if(editPassword)headers['x-edit-password']=editPassword;let target=API_BASE+path;if(!API_BASE&&location.hostname.endsWith('.edgeone.dev')){const auth=new URLSearchParams(location.search);const query=new URLSearchParams();if(auth.get('eo_token'))query.set('eo_token',auth.get('eo_token'));if(auth.get('eo_time'))query.set('eo_time',auth.get('eo_time'));if(query.size)target+=`?${query}`;}const res=await fetch(target,{...options,headers});const data=await res.json();if(!res.ok)throw new Error(data.error||'操作失败');return data;}
       async function loadShared(){
         try{
           const [td,sp,ex,rt]=await Promise.all([api('/api/todos'),api('/api/shopping'),api('/api/expenses'),api('/api/rates')]);
