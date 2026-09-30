@@ -1,5 +1,5 @@
 const MEMBERS = ['熊', '熊大仙', 'Heidi', '陈汇聪', 'Ava'];
-const ALLOWED_TYPES = new Set(['todos', 'shopping', 'expenses']);
+const ALLOWED_TYPES = new Set(['todos', 'shopping', 'expenses', 'receipts']);
 const ALLOWED_ORIGINS = new Set([
   'https://bytedance.doubaoapps.com',
   'https://seoul-trip-handbook.604107556.workers.dev',
@@ -85,6 +85,32 @@ function validateExpense(input) {
   return '';
 }
 
+function getOutstandingTransfers(expenses, receipts) {
+  const debts = Object.fromEntries(MEMBERS.map(from => [from, Object.fromEntries(MEMBERS.map(to => [to, 0]))]));
+  expenses.map(item => normalizeExpenseRecord(item).row).forEach(item => {
+    item.shares.forEach(share => {
+      if (share.member !== item.payer && MEMBERS.includes(share.member) && MEMBERS.includes(item.payer)) {
+        debts[share.member][item.payer] += Math.round(Number(share.amount) * 100);
+      }
+    });
+  });
+  receipts.forEach(item => {
+    if (MEMBERS.includes(item.from) && MEMBERS.includes(item.to)) {
+      debts[item.from][item.to] -= Math.round(Number(item.amount) * 100);
+    }
+  });
+  const transfers = [];
+  for (let i = 0; i < MEMBERS.length; i++) {
+    for (let j = i + 1; j < MEMBERS.length; j++) {
+      const left = MEMBERS[i], right = MEMBERS[j];
+      const delta = debts[left][right] - debts[right][left];
+      if (delta > 0) transfers.push({ from: left, to: right, amount: delta / 100 });
+      else if (delta < 0) transfers.push({ from: right, to: left, amount: -delta / 100 });
+    }
+  }
+  return transfers;
+}
+
 async function exchangeRates(env) {
   const cached = await env.SHARED_DATA.get('rates', 'json');
   if (cached && Date.now() - cached.updatedAt < 6 * 3600 * 1000) return cached;
@@ -128,7 +154,7 @@ export default {
     if (url.pathname === '/api/rates' && request.method === 'GET') {
       return response({ ok: true, rates: await exchangeRates(env) }, 200, request);
     }
-    const match = url.pathname.match(/^\/api\/(todos|shopping|expenses)(?:\/([^/]+))?$/);
+    const match = url.pathname.match(/^\/api\/(todos|shopping|expenses|receipts)(?:\/([^/]+))?$/);
     if (!match || !ALLOWED_TYPES.has(match[1])) return response({ ok: false, error: 'Not found' }, 404, request);
     const type = match[1];
     const id = match[2];
@@ -149,6 +175,12 @@ export default {
         const product = safeText(input.product);
         if (!product) return response({ ok: false, error: '请输入商品名称' }, 400, request);
         item = { id: crypto.randomUUID(), brand: safeText(input.brand, 80), product, purpose: safeText(input.purpose), price: safeText(input.price, 80), channel: safeText(input.channel), createdAt: Date.now() };
+      } else if (type === 'receipts') {
+        const from = safeText(input.from, 40), to = safeText(input.to, 40), amount = Number(input.amount);
+        if (!MEMBERS.includes(from) || !MEMBERS.includes(to) || from === to || !Number.isFinite(amount) || amount <= 0) return response({ ok: false, error: '收款记录无效' }, 400, request);
+        const outstanding = getOutstandingTransfers(await readList(env, 'expenses'), list).find(row => row.from === from && row.to === to);
+        if (!outstanding || Math.abs(outstanding.amount - amount) > 0.009) return response({ ok: false, error: '该笔待收金额已变化，请刷新后重试' }, 409, request);
+        item = { id: crypto.randomUUID(), from, to, amount: Math.round(amount * 100) / 100, receivedAt: Date.now() };
       } else {
         const error = validateExpense(input);
         if (error) return response({ ok: false, error }, 400, request);
