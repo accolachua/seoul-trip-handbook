@@ -417,17 +417,46 @@
       let currentRates={CNY:1,KRW:0.0052,HKD:0.92,USD:7.1,EUR:7.8};
       const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
       function notify(text){const t=document.getElementById('toast');t.textContent=text;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800);}
-      async function api(path,options={}){const headers={'content-type':'application/json',...(options.headers||{})};if(editPassword)headers['x-edit-password']=editPassword;let target=API_BASE+path;if(!API_BASE&&location.hostname.endsWith('.edgeone.dev')){const auth=new URLSearchParams(location.search);const query=new URLSearchParams();if(auth.get('eo_token'))query.set('eo_token',auth.get('eo_token'));if(auth.get('eo_time'))query.set('eo_time',auth.get('eo_time'));if(query.size)target+=`?${query}`;}const res=await fetch(target,{...options,headers});const data=await res.json();if(!res.ok)throw new Error(data.error||'操作失败');return data;}
+      async function api(path,options={}){
+        let target=API_BASE+path;
+        if(!API_BASE&&location.hostname.endsWith('.edgeone.dev')){
+          const auth=new URLSearchParams(location.search),query=new URLSearchParams();
+          if(auth.get('eo_token'))query.set('eo_token',auth.get('eo_token'));
+          if(auth.get('eo_time'))query.set('eo_time',auth.get('eo_time'));
+          if(query.size)target+=`?${query}`;
+        }
+        const method=(options.method||'GET').toUpperCase();
+        const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),12000);
+        const init={method,signal:controller.signal};
+        if(method!=='GET'&&method!=='HEAD'){
+          let payload={};
+          if(options.body){try{payload=JSON.parse(options.body);}catch{payload={};}}
+          if(editPassword)payload._editPassword=editPassword;
+          init.headers={'content-type':'text/plain;charset=UTF-8'};
+          init.body=JSON.stringify(payload);
+        }
+        try{
+          const res=await fetch(target,init);
+          const text=await res.text();
+          let data={};try{data=text?JSON.parse(text):{};}catch{throw new Error('共享服务返回异常');}
+          if(!res.ok)throw new Error(data.error||'操作失败');
+          return data;
+        }catch(err){
+          if(err.name==='AbortError')throw new Error('共享服务连接超时，请切换网络后重试');
+          if(err instanceof TypeError)throw new Error('当前网络无法连接共享服务');
+          throw err;
+        }finally{clearTimeout(timer);}
+      }
       async function loadShared(){
         try{
           const [td,sp,ex,rc,rt]=await Promise.all([api('/api/todos'),api('/api/shopping'),api('/api/expenses'),api('/api/receipts'),api('/api/rates')]);
           renderSharedTodos(td.items);renderSharedShopping(sp.items);renderExpenses(ex.items,rc.items);currentRates=rt.rates;syncRate();
           const d=new Date(currentRates.updatedAt||0);document.getElementById('rateStatus').textContent=`自动汇率来源：${currentRates.source||'公开汇率'}${currentRates.updatedAt?' · 更新 '+d.toLocaleString('zh-CN'):''}；每笔可手动覆盖。`;
-        }catch(e){document.getElementById('rateStatus').textContent='共享数据暂不可用，请稍后刷新；汇率可手动填写。';}
+        }catch(e){document.getElementById('rateStatus').textContent=`共享数据暂不可用：${e.message||'请稍后刷新'}；当前使用备用汇率，可手动修改。`;syncRate();}
       }
       function renderSharedTodos(items){document.getElementById('sharedTodos').innerHTML=items.map(x=>`<div class="shared-item"><div><strong>${esc(x.text)}</strong>${x.note?`<p>${esc(x.note)}</p>`:''}</div><button class="delete-btn" data-delete-type="todos" data-delete-id="${x.id}">删除</button></div>`).join('');bindDeletes();}
       function renderSharedShopping(items){document.getElementById('sharedShopping').innerHTML=items.map(x=>`<div class="shared-item"><div><strong>${esc(x.brand)} ${esc(x.product)}</strong><p>${esc(x.purpose)}${x.price?' · '+esc(x.price):''}${x.channel?' · '+esc(x.channel):''}</p></div><button class="delete-btn" data-delete-type="shopping" data-delete-id="${x.id}">删除</button></div>`).join('');bindDeletes();}
-      function bindDeletes(){document.querySelectorAll('[data-delete-type]').forEach(b=>b.onclick=async()=>{if(!editPassword){notify('请先输入编辑密码');return;}if(!confirm('确认删除这条记录？'))return;try{await api(`/api/${b.dataset.deleteType}/${b.dataset.deleteId}`,{method:'DELETE'});await loadShared();notify('已删除并同步');}catch(e){notify(e.message);}});}
+      function bindDeletes(){document.querySelectorAll('[data-delete-type]').forEach(b=>b.onclick=async()=>{if(!editPassword){notify('请先输入编辑密码');return;}if(!confirm('确认删除这条记录？'))return;try{await api(`/api/${b.dataset.deleteType}/${b.dataset.deleteId}`,{method:'POST',body:JSON.stringify({_action:'delete'})});await loadShared();notify('已删除并同步');}catch(e){notify(e.message);}});}
       function setupSharedForms(){
         document.getElementById('todoForm').onsubmit=async e=>{e.preventDefault();try{await api('/api/todos',{method:'POST',body:JSON.stringify({text:document.getElementById('todoText').value,note:document.getElementById('todoNote').value})});e.target.reset();await loadShared();notify('待办已新增并同步');}catch(err){notify(err.message);}};
         document.getElementById('shoppingForm').onsubmit=async e=>{e.preventDefault();try{await api('/api/shopping',{method:'POST',body:JSON.stringify({brand:document.getElementById('shopBrand').value,product:document.getElementById('shopProduct').value,purpose:document.getElementById('shopPurpose').value,price:document.getElementById('shopPrice').value,channel:document.getElementById('shopChannel').value})});e.target.reset();await loadShared();notify('商品已新增并同步');}catch(err){notify(err.message);}};

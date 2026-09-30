@@ -58,8 +58,18 @@ async function readList(env, type) {
   return normalized;
 }
 
-async function requireAuth(request, env) {
-  const password = request.headers.get('x-edit-password') || '';
+async function parseInput(request) {
+  try {
+    const text = await request.text();
+    return text ? JSON.parse(text) : {};
+  } catch {
+    return {};
+  }
+}
+
+async function requireAuth(request, env, input = null) {
+  const body = input || {};
+  const password = request.headers.get('x-edit-password') || safeText(body._editPassword, 200);
   if (!env.EDIT_PASSWORD || password !== env.EDIT_PASSWORD) {
     return response({ ok: false, error: '编辑密码错误' }, 401, request);
   }
@@ -145,7 +155,8 @@ export default {
     if (!url.pathname.startsWith('/api/')) return env.ASSETS.fetch(request);
 
     if (url.pathname === '/api/auth' && request.method === 'POST') {
-      const authError = await requireAuth(request, env);
+      const input = await parseInput(request);
+      const authError = await requireAuth(request, env, input);
       return authError || response({ ok: true }, 200, request);
     }
     if (url.pathname === '/api/config' && request.method === 'GET') {
@@ -160,12 +171,22 @@ export default {
     const id = match[2];
     if (request.method === 'GET' && !id) return response({ ok: true, items: await readList(env, type) }, 200, request);
 
-    const authError = await requireAuth(request, env);
+    let input = null;
+    if (['POST', 'DELETE'].includes(request.method)) input = await parseInput(request);
+    const authError = await requireAuth(request, env, input);
     if (authError) return authError;
     const list = await readList(env, type);
 
+    if (request.method === 'POST' && id && input?._action === 'delete') {
+      const next = list.filter(item => item.id !== id);
+      if (next.length === list.length) return response({ ok: false, error: '记录不存在' }, 404, request);
+      await env.SHARED_DATA.put(type, JSON.stringify(next));
+      return response({ ok: true }, 200, request);
+    }
+
     if (request.method === 'POST' && !id) {
-      const input = await request.json();
+      const { _editPassword, _action, ...cleanInput } = input || {};
+      input = cleanInput;
       let item;
       if (type === 'todos') {
         const text = safeText(input.text);
