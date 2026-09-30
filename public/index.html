@@ -233,7 +233,9 @@
     </section>
 
     <section class="section" id="todo">
-      <div class="section-head"><h2>待办事项</h2></div>
+      <details class="section-fold">
+        <summary><div class="fold-heading"><h2>待办事项</h2></div><span class="fold-toggle" aria-hidden="true"></span></summary>
+        <div class="fold-content">
       <form class="entry-form edit-only" id="todoForm"><input class="wide" id="todoText" placeholder="新增待办事项" required><input id="todoNote" placeholder="备注（可选）"><button class="action-btn" type="submit">新增待办</button></form>
       <div class="shared-list" id="sharedTodos"></div>
       <ul class="todo-list">
@@ -246,6 +248,8 @@
         <li><span class="status">条件</span><div><strong>若选 B 方案，提前购买 KTX 与天空胶囊票</strong><small>先锁定去返 KTX，再预约 11/02 上午尾浦→青沙浦胶囊时段。</small></div></li>
         <li><span class="status">待办</span><div><strong>准备支付与保暖用品</strong><small>境外银行卡、少量韩元、厚外套、围巾、转换插头、充电器和常用药。</small></div></li>
       </ul>
+        </div>
+      </details>
     </section>
 
     <section class="section" id="packing">
