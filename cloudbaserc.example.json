@@ -1,0 +1,16 @@
+{
+  "$schema": "https://static.cloudbase.net/cli/cloudbaserc.schema.json",
+  "envId": "dev-d8gxdqvok64864d6d",
+  "functionRoot": "functions",
+  "functions": [
+    {
+      "name": "travelApi",
+      "type": "HTTP",
+      "timeout": 10,
+      "runtime": "Nodejs20.19",
+      "memorySize": 256,
+      "installDependency": false,
+      "envVariables": {}
+    }
+  ]
+}
