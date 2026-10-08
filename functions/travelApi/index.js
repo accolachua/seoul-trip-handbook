@@ -72,6 +72,25 @@ async function deleteItem(kind, id) {
   await dbRequest(path, { method: 'DELETE', prefer: 'return=minimal' });
 }
 
+async function updateTodo(id, completed) {
+  const path = `?kind=eq.todos&item_id=eq.${encodeURIComponent(id)}&select=item_id,data`;
+  const rows = await dbRequest(path, { method: 'GET' });
+  const row = rows?.[0];
+  if (!row) return null;
+  const data = {
+    ...row.data,
+    completed: Boolean(completed),
+    status: completed ? '已完成' : '待办',
+    completedAt: completed ? Date.now() : null,
+  };
+  await dbRequest(`?kind=eq.todos&item_id=eq.${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ data, updated_at: new Date().toISOString() }),
+    prefer: 'return=representation',
+  });
+  return { ...data, id };
+}
+
 function normalizeExpense(expense) {
   const row = {
     ...expense,
@@ -167,6 +186,13 @@ async function handle(req, res) {
   if (req.method === 'GET' && !id) return send(res, 200, { ok: true, items: await readList(type) });
   if (!authOk(input)) return send(res, 401, { ok: false, error: '编辑密码错误' });
 
+  if (id && type === 'todos' && req.method === 'POST' && input._action === 'toggle') {
+    if (typeof input.completed !== 'boolean') return send(res, 400, { ok: false, error: '待办完成状态无效' });
+    const item = await updateTodo(id, input.completed);
+    if (!item) return send(res, 404, { ok: false, error: '待办事项不存在' });
+    return send(res, 200, { ok: true, item });
+  }
+
   if (id && req.method === 'POST' && input._action === 'delete') {
     await deleteItem(type, id);
     return send(res, 200, { ok: true });
@@ -177,7 +203,7 @@ async function handle(req, res) {
     let item;
     if (type === 'todos') {
       if (!text(payload.text)) return send(res, 400, { ok: false, error: '待办内容不能为空' });
-      item = { text: text(payload.text), note: text(payload.note), status: '待办', createdAt: Date.now() };
+      item = { text: text(payload.text), note: text(payload.note), status: '待办', completed: false, completedAt: null, createdAt: Date.now() };
     } else if (type === 'shopping') {
       if (!text(payload.product)) return send(res, 400, { ok: false, error: '商品名称不能为空' });
       item = { brand: text(payload.brand, 80), product: text(payload.product), purpose: text(payload.purpose), price: text(payload.price, 80), channel: text(payload.channel), createdAt: Date.now() };
