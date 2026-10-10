@@ -269,11 +269,11 @@
 
     <section class="section" id="shopping">
       <details class="section-fold">
-        <summary><div class="fold-heading"><h2>购物清单</h2><p class="section-note">未提供真实产品图与明确价格的条目不做猜测，统一标注待补或现场确认。</p></div><span class="fold-toggle" aria-hidden="true"></span></summary>
+        <summary><div class="fold-heading"><h2>购物清单</h2><p class="section-note">未提供明确价格的条目标注现场确认。药膏属于药品，不是普通护肤品；购买和使用前请咨询药师，尤其是氢醌、类固醇及高浓度壬二酸产品。</p></div><span class="fold-toggle" aria-hidden="true"></span></summary>
         <div class="fold-content">
       <form class="entry-form edit-only" id="shoppingForm"><input id="shopBrand" placeholder="品牌"><input id="shopProduct" placeholder="商品名称" required><input id="shopPurpose" placeholder="作用"><input id="shopPrice" placeholder="参考价格"><input class="wide" id="shopChannel" placeholder="购买渠道/备注"><button class="action-btn" type="submit">新增商品</button></form>
       <div class="shared-list" id="sharedShopping"></div>
-      <div class="module-tools"><input class="search-box" id="shoppingSearch" type="search" placeholder="搜索品牌、产品或作用"></div>
+      <div class="module-tools"><input class="search-box" id="shoppingSearch" type="search" placeholder="搜索品牌、产品、作用或药膏分类"><div id="shoppingFilters"></div></div>
       <div class="shopping-grid" id="shoppingList"></div>
         </div>
       </details>
@@ -377,7 +377,19 @@
         ['圣水洞','AMA 迪拜巧克力','营业时间待核实','开心果流心、卡达伊夫丝巧克力','圣水洞','₩8,000-12,000/块','用户资料称室温回温后口感更流心；适合作伴手礼，品牌与门店信息需核对','AMA 두바이초콜릿 성수','candidate']
       ];
       const shoppingData=[
-        ['伊索','B3C 面霜','泛醇、VC衍生物、芦荟；偏温和，不属猛药型VC'],['伊索','澄颖面膜','BHA水杨酸 + PHA葡糖酸内酯'],['伊索','天竺葵体乳','身体保湿'],['伊索','澄莹精华','抗氧化'],['修丽可','小银伞防晒','防晒'],['香奈儿','美白油散粉','底妆'],['蓝色大象','眼镜框','配饰'],['LOE','香水护手霜','香氛护理'],['美迪惠尔','积雪草/玫瑰/茶树面膜','舒缓保湿'],['Abib','复活草/积雪草/谷胱甘肽面膜','保湿、舒缓、提亮'],['Abib','鱼腥草舒缓面霜/保湿凝胶','舒缓、保湿'],['护手霜','黑管基础保湿/绿色G木质调','手部护理'],['SKIN1004','卸妆油','卸妆'],['celimax','视黄醇精华','抗老；敏感肌先局部试用'],['Dr.Althea','345舒缓面霜','烟酰胺、积雪草、神经酰胺'],['Redence','美白烟酰胺精华','5%烟酰胺、谷胱甘肽、PDRN、透明质酸；效果渐进，敏感肌先试'],['VT','Reedle Shot 100','入门微针精华；有刺痛感，敏感肌谨慎局部试'],['Alternative Stereo','Caramel Glaze 10号焦糖唇蜜','暖调奶油杏桃色；约₩10,000+，库存现场确认']
+        ['伊索','B3C 面霜','泛醇、VC衍生物、芦荟；偏温和，不属猛药型VC'],['伊索','澄颖面膜','BHA水杨酸 + PHA葡糖酸内酯'],['伊索','天竺葵体乳','身体保湿'],['伊索','澄莹精华','抗氧化'],['修丽可','小银伞防晒','防晒'],['香奈儿','美白油散粉','底妆'],['蓝色大象','眼镜框','配饰'],['LOE','香水护手霜','香氛护理'],['美迪惠尔','积雪草/玫瑰/茶树面膜','舒缓保湿'],['Abib','复活草/积雪草/谷胱甘肽面膜','保湿、舒缓、提亮'],['Abib','鱼腥草舒缓面霜/保湿凝胶','舒缓、保湿'],['护手霜','黑管基础保湿/绿色G木质调','手部护理'],['SKIN1004','卸妆油','卸妆'],['celimax','视黄醇精华','抗老；敏感肌先局部试用'],['Dr.Althea','345舒缓面霜','烟酰胺、积雪草、神经酰胺'],['Redence','美白烟酰胺精华','5%烟酰胺、谷胱甘肽、PDRN、透明质酸；效果渐进，敏感肌先试'],['VT','Reedle Shot 100','入门微针精华；有刺痛感，敏感肌谨慎局部试'],['Alternative Stereo','Caramel Glaze 10号焦糖唇蜜','暖调奶油杏桃色；约₩10,000+，库存现场确认'],
+        ['药膏·痘痘护理','Acnon Cream','红肿发炎痘；抗炎+抗菌，局部薄涂；与闭口类产品不能互相替代','价格现场确认','韩国药房；购买与使用前咨询药师'],
+        ['药膏·痘痘护理','Aclean Gel','闭口、白头、黑头；用户资料称含2%水杨酸+茶树油，注意刺激与叠加使用','价格现场确认','韩国药房；敏感肌先小范围试用并咨询药师'],
+        ['药膏·痘痘护理','Noscarna Gel','痘印、疤痕；仅限伤口完全闭合后使用，开放伤口禁用','价格现场确认','韩国药房；购买与使用前咨询药师'],
+        ['药膏·痘痘护理','Azelia Cream','反复长痘；20%壬二酸，初次少量局部试用，注意刺激','价格现场确认','韩国药房；高浓度壬二酸请先咨询药师'],
+        ['药膏·家庭应急','D-Pan Bug Gel','虫咬、痱子、瘙痒；凝胶质地，局部使用','价格现场确认','韩国药房；症状持续或加重需就医'],
+        ['药膏·家庭应急','D-Pan Septic Cream','擦伤、割伤、小烫伤；用户资料称含氯己定，用于消毒与修护','价格现场确认','韩国药房；伤口严重、感染或大面积烫伤需就医'],
+        ['药膏·家庭应急','D-Panthenol Ointment','干燥、皮炎、皮肤屏障受损；用户资料称含5%右泛醇且不含类固醇','价格现场确认','韩国药房；明确症状后再选，破损伤口与单纯干燥用途不同'],
+        ['药膏·家庭应急','D-Pan Cure Cream','非感染性炎症；含弱效类固醇，连续使用不超过2周','价格现场确认','韩国药房；含类固醇，必须先咨询药师，感染性皮损勿自行使用'],
+        ['药膏·局部淡斑','Domina Light 2% 40g','轻度色斑或初次使用；氢醌2%，仅局部点涂，不是全脸美白霜','价格现场确认','韩国药房；建议夜间用、白天严格防晒，先咨询药师'],
+        ['药膏·局部淡斑','MelaToning Cream 2% 30g','晒斑、雀斑、老年斑；氢醌2%，仅局部点涂','价格现场确认','韩国药房；建议夜间用、白天严格防晒，先咨询药师'],
+        ['药膏·局部淡斑','Domina Cream 4% 50g','较明显色斑；氢醌4%，刺激风险高于2%','价格现场确认','韩国药房；不可全脸使用，购买与使用前咨询药师'],
+        ['药膏·局部淡斑','MelaNosa Cream 4% 30g','较深或顽固色沉；氢醌4%，仅局部点涂','价格现场确认','韩国药房；刺激风险较高，夜间使用并严格防晒，先咨询药师']
       ];
       const noticeData=[
         ['天气','11月初约5-15°C，早晚温差大，江边约5-8°C；厚外套、围巾、保暖内衣，出发前48小时查预报。'],['导航','Naver Map或Kakao Map为主，Google步行导航受限；下载离线地图，Papago辅助翻译。'],['支付','大部分店支持Visa/Master；部分小店仅现金；建议备₩300,000-500,000，支付宝/微信仅部分连锁可用。'],['退税','单笔满₩30,000常可店内退税；带护照并保留退税单；机场建议退至支付宝。'],['营业时间','多数店11:00开门、20:00-22:00关门；百货时间以门店为准，周日部分小店休。'],['交通卡','便利店购买T-money，地铁公交通用；30分钟内换乘常有优惠，离境可退余额并扣手续费。'],['通信','确认手机支持eSIM；也可机场租KT/SKT/LG U+ WiFi或开漫游。'],['用电','韩国220V圆头两孔，需德标/欧标转换插头；建议自带1-2个。'],['紧急联系','报警112；火警/急救119；中国驻韩大使馆 +82-2-738-1038；香港入境处 +852-2829-3010。'],['语言','谢谢 감사합니다；对不起 죄송합니다；多少钱 얼마예요；地铁 지하철；出租车 택시；便利店 편의점。'],['时差与地铁','韩国比香港快1小时；航班均为当地时间。地铁约05:30-24:00，深夜到达只能打车。'],['旅行保险','建议购买含医疗和航班延误的旅行保险，出发前完成。'],['穿搭与逛街','每天步行1-2万步，穿舒适鞋、背轻便包；江南、圣水侧巷、汉南都有坡。'],['赏秋咖啡馆','江北区咖啡山下/蒙布鲁；钟路区付岩洞燕子花茶房、Staff Picks、Tung；Smeltz较远，建议单独安排。'],['赏秋提醒','最佳时间约11月初；若行程紧张可放弃咖啡馆，集中逛街。']
@@ -426,7 +438,7 @@
         let cat='全部'; const search=document.getElementById('foodSearch'); const apply=()=>document.querySelectorAll('.food-card').forEach(c=>{const okCat=cat==='全部'||c.dataset.foodCat===cat;const okText=c.dataset.search.toLowerCase().includes(search.value.trim().toLowerCase());c.classList.toggle('hidden',!(okCat&&okText));});
         document.querySelectorAll('[data-food-filter]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-food-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');cat=b.dataset.foodFilter;apply();}));search.addEventListener('input',apply);
       }
-      function renderShopping(){document.getElementById('shoppingList').innerHTML=shoppingData.map(x=>`<article class="shop-card" data-search="${x.join(' ')}"><div class="brand">${x[0]}</div><h3>${x[1]}</h3><dl><dt>作用</dt><dd>${x[2]}</dd><dt>产品图</dt><dd>待补图片</dd><dt>价格</dt><dd>${x[1].includes('Caramel Glaze')?'约₩10,000+':'现场确认'}</dd><dt>渠道</dt><dd>Olive Young/品牌门店，库存现场确认</dd></dl></article>`).join('');const s=document.getElementById('shoppingSearch');s.addEventListener('input',()=>document.querySelectorAll('.shop-card').forEach(c=>c.classList.toggle('hidden',!c.dataset.search.toLowerCase().includes(s.value.trim().toLowerCase()))));}
+      function renderShopping(){const groups=['全部','普通购物','痘痘护理','家庭应急','局部淡斑'];const groupOf=x=>x[0].startsWith('药膏·')?x[0].slice(3):'普通购物';document.getElementById('shoppingFilters').innerHTML=groups.map((g,i)=>`<button class="filter-btn ${i===0?'active':''}" type="button" data-shop-filter="${g}">${g}</button>`).join('');document.getElementById('shoppingList').innerHTML=shoppingData.map(x=>{const medicine=x[0].startsWith('药膏·'),group=groupOf(x),price=medicine?x[3]:(x[1].includes('Caramel Glaze')?'约₩10,000+':'现场确认'),channel=medicine?x[4]:'Olive Young/品牌门店，库存现场确认';return `<article class="shop-card" data-shop-group="${group}" data-search="${x.join(' ')}"><div class="brand">${x[0]}</div><h3>${x[1]}</h3><dl><dt>作用</dt><dd>${x[2]}</dd><dt>产品图</dt><dd>待补图片</dd><dt>价格</dt><dd>${price}</dd><dt>渠道</dt><dd>${channel}</dd></dl></article>`;}).join('');let active='全部';const search=document.getElementById('shoppingSearch'),apply=()=>document.querySelectorAll('.shop-card').forEach(c=>{const groupOk=active==='全部'||c.dataset.shopGroup===active,textOk=c.dataset.search.toLowerCase().includes(search.value.trim().toLowerCase());c.classList.toggle('hidden',!(groupOk&&textOk));});document.querySelectorAll('[data-shop-filter]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-shop-filter]').forEach(x=>x.classList.remove('active'));b.classList.add('active');active=b.dataset.shopFilter;apply();});search.addEventListener('input',apply);}
       function renderNotices(){document.getElementById('noticeList').innerHTML=noticeData.map(x=>`<article class="notice-card"><h3>${x[0]}</h3><p>${x[1]}</p></article>`).join('');}
       const members=['熊','熊大仙','Heidi','陈汇聪','Ava'];
       const API_BASE='https://dev-d8gxdqvok64864d6d-1454994890.ap-shanghai.app.tcloudbase.com';
