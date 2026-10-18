@@ -157,6 +157,47 @@ async function handle(req, res) {
     if (req.method === 'POST') return send(res, authOk(input) ? 200 : 401, authOk(input) ? { ok: true } : { ok: false, error: '编辑密码错误' });
   }
 
+  if (path === '/weather' && req.method === 'GET') {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const endpoint = 'https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSeoul&forecast_days=6';
+      const response = await fetch(endpoint, { signal: controller.signal });
+      if (!response.ok) throw new Error('天气服务异常');
+      const data = await response.json();
+      const daily = data?.daily || {};
+      const dates = Array.isArray(daily.time) ? daily.time : [];
+      const forecast = dates.map((date, index) => ({
+        date,
+        weatherCode: Number(daily.weather_code?.[index]),
+        max: Number(daily.temperature_2m_max?.[index]),
+        min: Number(daily.temperature_2m_min?.[index]),
+        rain: Number(daily.precipitation_probability_max?.[index]),
+      })).filter(item => item.date && Number.isFinite(item.max) && Number.isFinite(item.min));
+      const current = data?.current || {};
+      if (!forecast.length || !Number.isFinite(Number(current.temperature_2m))) throw new Error('天气数据不完整');
+      return send(res, 200, {
+        ok: true,
+        city: '首尔',
+        timezone: data.timezone || 'Asia/Seoul',
+        current: {
+          time: current.time,
+          temperature: Number(current.temperature_2m),
+          apparent: Number(current.apparent_temperature),
+          weatherCode: Number(current.weather_code),
+          windSpeed: Number(current.wind_speed_10m),
+        },
+        forecast,
+        updatedAt: Date.now(),
+        source: 'Open-Meteo',
+      });
+    } catch (error) {
+      return send(res, 503, { ok: false, error: error.name === 'AbortError' ? '天气服务连接超时' : '天气暂时无法更新' });
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
   if (path === '/rates' && req.method === 'GET') {
     try {
       const response = await fetch('https://api.frankfurter.app/latest?from=CNY&to=KRW,HKD,USD,EUR');
