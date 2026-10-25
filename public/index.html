@@ -108,7 +108,7 @@
     <section class="section" id="overview">
       <div class="section-head"><h2>路线总览</h2></div>
       <div class="map-board">
-        <svg viewBox="0 0 980 430" role="img" aria-label="香港、首尔与釜山行程路线示意图">
+        <svg viewBox="0 0 980 430" role="img" aria-label="香港与首尔行程路线示意图">
           <defs><filter id="rough"><feTurbulence baseFrequency="0.015" numOctaves="2" seed="4" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="2"/></filter></defs>
           <path d="M80 86 C190 70 225 62 320 90" fill="none" stroke="#B9827D" stroke-width="7" stroke-linecap="round" stroke-dasharray="13 9" filter="url(#rough)"/>
           <path d="M320 90 C425 120 435 185 520 168 S665 122 770 148" fill="none" stroke="#9ECABB" stroke-width="7" stroke-linecap="round" filter="url(#rough)"/>
@@ -122,7 +122,7 @@
           <g transform="translate(570 270)"><circle r="10" fill="#FDD3D5"/><text x="-48" y="-24" class="map-label">汝矣岛</text></g>
           <g transform="translate(345 250)"><circle r="10" fill="#FDD3D5"/><text x="-46" y="-24" class="map-label">永登浦</text></g>
           <g transform="translate(765 306)"><circle r="10" fill="#A77D75"/><text x="-62" y="-24" class="map-label">江南 / 汉南</text><text x="-62" y="30" class="map-small">A 方案</text></g>
-          <g transform="translate(615 355)"><circle r="10" fill="#775C55"/><text x="-28" y="-20" class="map-label">釜山</text><text x="-28" y="28" class="map-small">B 方案</text></g>
+          <g transform="translate(615 355)"><circle r="10" fill="#775C55"/><text x="-62" y="-20" class="map-label">永登浦 / 汝矣岛</text><text x="-28" y="28" class="map-small">B 方案</text></g>
           <g transform="translate(185 340)"><circle r="10" fill="#775C55"/><text x="-20" y="-24" class="map-label">仁川机场</text><text x="-20" y="30" class="map-small">11/03 返港</text></g>
           <g transform="translate(450 204)"><path d="M0 10 15-2l15 12v22H0Z" fill="var(--white)" stroke="var(--ink)" stroke-width="2"/><path d="M10 42V25h10v17" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="-8" y="61" class="map-small">合井住宿 · 2晚</text></g>
           <g transform="translate(386 292)"><path d="M0 10 15-2l15 12v22H0Z" fill="var(--white)" stroke="var(--ink)" stroke-width="2"/><path d="M10 42V25h10v17" fill="none" stroke="var(--ink)" stroke-width="2"/><text x="-14" y="61" class="map-small">GMS Hotel · 2晚</text></g>
@@ -183,77 +183,56 @@
       </article>
 
       <article class="day" id="d2" style="--day-color:#FDD3D5">
-        <div class="day-top"><div><div class="day-title">11 月 1 日 · 寄存行李后路线二选一</div><div class="day-sub">首尔时间 UTC+9 · 5 人同行 · 晚间返程分流</div></div><div class="day-actions"><button class="map-btn" data-map="map-d2">展开路线</button></div></div>
-        <div class="daily-map" id="map-d2"><div class="route-sketch"><div class="route-stop"><div class="dot"></div>合井</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>GMS<br>寄存</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>路线1<br>购物</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>路线2<br>宫殿北村</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>GMS<br>分流</div></div></div>
+        <div class="day-top"><div><div class="day-title">11 月 1 日 · 景福宫北村南山一日线</div><div class="day-sub">首尔时间 UTC+9 · 5 人同行 · 景福宫站寄存 · 首尔站分流</div></div><div class="day-actions"><button class="map-btn" data-map="map-d2">展开路线</button><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Hongdae%20Seoul&destination=Seoul%20Station&waypoints=Gyeongbokgung%20Station%7CTongin%20Market%7CGyeongbokgung%20Palace%7CTOUT%20Y%20EST%2052%20Samcheong-ro%7CBukchon%20Hanok%20Village%7CGyeongbokgung%20Station%7CN%20Seoul%20Tower">全天多点导航</a></div></div>
+        <div class="daily-map" id="map-d2"><div class="route-sketch"><div class="route-stop"><div class="dot"></div>合井<br>退房</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>景福宫站<br>寄存</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>西村<br>景福宫</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>三清洞<br>北村</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>景福宫站<br>取行李</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>南山<br>首尔塔</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>首尔站<br>分流</div></div></div>
         <div class="timeline">
-          <div class="event"><div class="time">08:30–09:30</div><div class="axis"></div><div class="event-card"><h4>早餐与退房准备</h4><p>5 人早餐建议前一晚买好；检查护照、充电宝及3人的返程物品。</p></div></div>
-          <div class="event"><div class="time">09:30–10:30</div><div class="axis"></div><div class="event-card"><h4>前往 Hotel GMS 寄存行李</h4><p>合井→新吉/永登浦，约20分钟；5人先寄存行李，情侣入住时间为17:00后。</p><a href="https://www.google.com/maps/search/?api=1&query=Hotel%20GMS%20867%20Gyeongin-ro%20Seoul" target="_blank" rel="noopener">导航到酒店</a></div></div>
-        </div>
-        <div class="plans" aria-label="11月1日路线选择"><button class="plan-btn active" data-plan="d2-plan-shopping">路线 1 · 永登浦汝矣岛</button><button class="plan-btn" data-plan="d2-plan-heritage">路线 2 · 景福宫北村南山</button></div>
-        <div class="plan active" id="d2-plan-shopping">
-          <div class="day-actions" style="margin-bottom:8px"><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20GMS%20Seoul&destination=Hotel%20GMS%20Seoul&waypoints=Times%20Square%20Seoul%7CThe%20Hyundai%20Seoul">路线1多点导航</a></div>
-          <div class="timeline">
-            <div class="event"><div class="time">10:30–12:00</div><div class="axis"></div><div class="event-card"><h4>Times Square 与新世界百货</h4><p>室内集中购物，适合补伴手礼。</p><a href="https://www.google.com/maps/search/?api=1&query=Times%20Square%20Yeongdeungpo%20Seoul" target="_blank" rel="noopener">打开地图</a></div></div>
-            <div class="event"><div class="time">12:00–13:00</div><div class="axis"></div><div class="event-card"><h4>午餐</h4><p>Times Square 或永登浦站附近，参考 ₩15,000—25,000/人。</p></div></div>
-            <div class="event"><div class="time">13:00–17:30</div><div class="axis"></div><div class="event-card"><h4>The Hyundai Seoul / IFC Mall</h4><p>重点看B1—B2潮牌、小众品牌与退税。11/01为周日，官方常规零售营业约10:30—20:30；餐饮至22:00。</p><a href="https://www.google.com/maps/search/?api=1&query=The%20Hyundai%20Seoul" target="_blank" rel="noopener">导航到商场</a></div></div>
-            <div class="event"><div class="time">17:30–19:00</div><div class="axis"></div><div class="event-card"><h4>汝矣岛晚餐</h4><p>水芹五花肉、猪脚或百货餐厅，参考 ₩15,000—30,000/人。</p></div></div>
-            <div class="event"><div class="time">19:00–19:45</div><div class="axis"></div><div class="event-card"><h4>返回 Hotel GMS</h4><p>地铁5号线汝矣岛→新吉后步行，或按体力打车；不要继续加购物点。</p></div></div>
-          </div>
-        </div>
-        <div class="plan" id="d2-plan-heritage">
-          <div class="day-actions" style="margin-bottom:8px"><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20GMS%20Seoul&destination=N%20Seoul%20Tower&waypoints=Tongin%20Market%7CGyeongbokgung%20Palace%7CTOUT%20Y%20EST%2052%20Samcheong-ro%7CBukchon%20Hanok%20Village%7CChungmuro%20Station">路线2多点导航</a></div>
-          <div class="timeline">
-            <div class="event"><div class="time">10:30–11:15</div><div class="axis"></div><div class="event-card"><h4>GMS → 景福宫站 / 西村</h4><p>步行到永登浦市场站，搭地铁5号线至钟路3街，再换3号线到景福宫站；以地铁为主，预留换乘及步行时间。</p><a href="https://www.google.com/maps/search/?api=1&query=Seochon%20Hanok%20Village" target="_blank" rel="noopener">导航到西村</a></div></div>
-            <div class="event"><div class="time">11:15–12:15</div><div class="axis"></div><div class="event-card"><h4>西村与通仁市场早午餐</h4><p>景福宫站2号出口→通仁市场→西村核心街区，控制在1小时。通仁市场各店营业不同，午餐盒咖啡馆周末约11:00—16:00；11月1日是第一个周日，并非每月第三个周日整体休市日。</p><a href="https://www.google.com/maps/search/?api=1&query=Tongin%20Market%20Seoul" target="_blank" rel="noopener">导航到通仁市场</a></div></div>
-            <div class="event"><div class="time">12:15–13:50</div><div class="axis"></div><div class="event-card"><h4>迎秋门入 → 景福宫单向游览 <span class="tag">现场购票</span></h4><p>从西村侧迎秋门进入→香远亭→庆会楼→勤政殿→建春门出，继续向东不走回头路。11月至次年2月09:00—17:00，16:00停止入场，星期二闭馆；外国成人₩3,000，穿符合规定的完整韩服可免费入场。</p></div></div>
-            <div class="event"><div class="time">13:50–14:20</div><div class="axis"></div><div class="event-card"><h4>TOUT Y EST 三清洞旗舰店</h4><p>从建春门出来后沿三清路前往。地址：首尔钟路区三清路52号；周日12:00—20:00营业，周一休息，陈列包袋和鞋履全系列。时间紧，建议控制在30分钟内。</p><a href="https://www.google.com/maps/search/?api=1&query=TOUT%20Y%20EST%2052%20Samcheong-ro%20Seoul" target="_blank" rel="noopener">导航到TOUT Y EST</a></div></div>
-            <div class="event"><div class="time">14:20–14:50</div><div class="axis"></div><div class="event-card"><h4>三清洞简餐 / 咖啡补给</h4><p>优先选择无需排队的面食、饭卷或咖啡简餐；如通仁市场已经吃饱，此段直接用于休息和拍照。</p><a href="https://www.google.com/maps/search/?api=1&query=Samcheong-dong%20Seoul" target="_blank" rel="noopener">打开三清洞</a></div></div>
-            <div class="event"><div class="time">14:50–15:40</div><div class="axis"></div><div class="event-card"><h4>三清洞 → 北村 → 安国站</h4><p>从三清洞向北村缓慢上坡，再沿桂洞路下坡到安国站。北村免费，红区通常仅10:00—17:00允许游客进入；周日公开口径存在差异，以现场封闭和安静游览标识为准，如核心巷道关闭就改走三清洞、桂洞路及北村文化中心周边。</p><a href="https://www.google.com/maps/search/?api=1&query=Bukchon%20Hanok%20Village" target="_blank" rel="noopener">导航到北村</a></div></div>
-            <div class="event"><div class="time">15:40–16:20</div><div class="axis"></div><div class="event-card"><h4>安国站 → 忠武路站</h4><p>搭地铁3号线直达忠武路，无需换乘；从2号出口前往大韩剧场前公交站。</p></div></div>
-            <div class="event"><div class="time">16:20–16:45</div><div class="axis"></div><div class="event-card"><h4>搭01A南山循环巴士上山</h4><p>忠武路站2号出口步行约1分钟至站点，搭01A约15分钟抵达YTN首尔塔；比绕去明洞缆车站更顺路。</p><a href="https://www.google.com/maps/search/?api=1&query=Chungmuro%20Station%20Exit%202" target="_blank" rel="noopener">导航到忠武路2号口</a></div></div>
-            <div class="event"><div class="time">16:45–18:30</div><div class="axis"></div><div class="event-card"><h4>南山公园与N首尔塔日落夜景</h4><p>11月1日日落约17:34。南山公园、首尔塔广场及塔内1—4层公共区免费；T5观景台周末约10:00—23:00，成人参考₩29,000，可按能见度和排队情况现场决定。</p><a href="https://www.google.com/maps/search/?api=1&query=N%20Seoul%20Tower" target="_blank" rel="noopener">导航到首尔塔</a></div></div>
-            <div class="event"><div class="time">18:30–19:45</div><div class="axis"></div><div class="event-card"><h4>01A下山并返回 Hotel GMS</h4><p>搭01A返回忠武路方向，再乘4号线至首尔站、换1号线到永登浦；若等待公交过久，优先打车到就近地铁站，不拖延分流。</p><a href="https://www.google.com/maps/dir/?api=1&origin=N%20Seoul%20Tower&destination=Hotel%20GMS%20867%20Gyeongin-ro%20Seoul" target="_blank" rel="noopener">返回GMS导航</a></div></div>
-          </div>
-        </div>
-        <div class="timeline">
-          <div class="event"><div class="time">19:45–20:45</div><div class="axis"></div><div class="event-card"><h4>永登浦晚餐 / 整理返程行李</h4><p>3人确认护照、登机信息与T1；情侣可办理GMS入住。路线2如晚点，改在便利店或酒店附近快速用餐。</p></div></div>
-          <div class="event"><div class="time">20:45–21:15</div><div class="axis"></div><div class="event-card"><h4>分流：3人取行李，2人入住</h4><p>检查证件、充电器、退税材料和航班信息。</p><a href="https://www.google.com/maps/dir/?api=1&destination=Hotel%20GMS%20867%20Gyeongin-ro%20Yeongdeungpo-gu%20Seoul" target="_blank" rel="noopener">导航到GMS酒店</a></div></div>
-          <div class="event"><div class="time">21:15–22:30</div><div class="axis"></div><div class="event-card"><h4>3人前往仁川机场T1</h4><p>出租约60—70分钟，建议23:00前抵达；机场大巴需由酒店前台确认当日班次。</p><a href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20GMS%20Seoul&destination=Incheon%20International%20Airport%20Terminal%201" target="_blank" rel="noopener">机场导航</a></div></div>
+          <div class="event"><div class="time">08:30–09:15</div><div class="axis"></div><div class="event-card"><h4>早餐、整理与退房</h4><p>5人检查护照、充电宝和返程物品；行李为1个行李箱及其余双肩包，贵重物品随身携带。</p></div></div>
+          <div class="event"><div class="time">09:15–10:00</div><div class="axis"></div><div class="event-card"><h4>合井 → 景福宫站</h4><p>优先乘地铁2号线到乙支路3街，换3号线到景福宫站；带行李换乘时预留电梯和步行时间。</p><a href="https://www.google.com/maps/dir/?api=1&origin=Hapjeong%20Station&destination=Gyeongbokgung%20Station&travelmode=transit" target="_blank" rel="noopener">前往景福宫站</a></div></div>
+          <div class="event"><div class="time">10:00–10:20</div><div class="axis"></div><div class="event-card"><h4>景福宫站寄存行李 <span class="tag">优先完成</span></h4><p>优先使用7号出口附近储物柜：A区在地下2层顾客安全室旁，B/C区在7号出口周围楼梯下，开放约05:00—24:00。1个行李箱用大柜，双肩包合用1—2个中柜；如大柜已满，改用附近可预约人工寄存。</p><a href="https://www.google.com/maps/search/?api=1&query=Gyeongbokgung%20Station%20Exit%207" target="_blank" rel="noopener">导航到7号出口</a></div></div>
+          <div class="event"><div class="time">10:20–11:30</div><div class="axis"></div><div class="event-card"><h4>西村与通仁市场早午餐</h4><p>从景福宫站步行至通仁市场和西村核心街区。通仁市场各店营业不同；11月1日为第一个周日，并非每月第三个周日整体休市日。</p><a href="https://www.google.com/maps/search/?api=1&query=Tongin%20Market%20Seoul" target="_blank" rel="noopener">导航到通仁市场</a></div></div>
+          <div class="event"><div class="time">11:30–13:00</div><div class="axis"></div><div class="event-card"><h4>迎秋门入 → 景福宫单向游览 <span class="tag">现场购票</span></h4><p>西村侧迎秋门进入→香远亭→庆会楼→勤政殿→建春门出，继续向东。11月至次年2月09:00—17:00，16:00停止入场，星期二闭馆；外国成人₩3,000，穿符合规定的完整韩服可免费入场。</p></div></div>
+          <div class="event"><div class="time">13:00–13:35</div><div class="axis"></div><div class="event-card"><h4>TOUT Y EST 三清洞旗舰店</h4><p>从建春门沿三清路前往钟路区三清路52号；周日12:00—20:00，周一休息。控制在约35分钟。</p><a href="https://www.google.com/maps/search/?api=1&query=TOUT%20Y%20EST%2052%20Samcheong-ro%20Seoul" target="_blank" rel="noopener">导航到TOUT Y EST</a></div></div>
+          <div class="event"><div class="time">13:35–14:15</div><div class="axis"></div><div class="event-card"><h4>三清洞午餐 / 咖啡补给</h4><p>按排队情况选择三清洞面片汤、参鸡汤或无需等位的简餐；如果通仁市场已吃饱，改为咖啡休息。</p><a href="https://www.google.com/maps/search/?api=1&query=Samcheong-dong%20Seoul" target="_blank" rel="noopener">打开三清洞</a></div></div>
+          <div class="event"><div class="time">14:15–15:15</div><div class="axis"></div><div class="event-card"><h4>三清洞 → 北村 → 安国站</h4><p>从三清洞上坡进入北村，再沿桂洞路下坡到安国站。北村红区公开口径存在差异，以现场封闭和安静游览标识为准；如核心巷道关闭，改走三清洞、桂洞路及北村文化中心周边。</p><a href="https://www.google.com/maps/search/?api=1&query=Bukchon%20Hanok%20Village" target="_blank" rel="noopener">导航到北村</a></div></div>
+          <div class="event"><div class="time">15:15–15:45</div><div class="axis"></div><div class="event-card"><h4>安国站 → 景福宫站取行李</h4><p>搭地铁3号线1站返回景福宫站，取回行李箱和双肩包；取件后核对护照、钱包及储物柜内是否清空。</p><a href="https://www.google.com/maps/dir/?api=1&origin=Anguk%20Station&destination=Gyeongbokgung%20Station&travelmode=transit" target="_blank" rel="noopener">返回取行李</a></div></div>
+          <div class="event"><div class="time">15:45–16:35</div><div class="axis"></div><div class="event-card"><h4>前往南山首尔塔</h4><p>带行李乘3号线到忠武路，再从2号出口搭01A南山循环巴士；如推箱不便，改打车到忠武路或南山换乘点，车辆不能直达塔顶。</p><a href="https://www.google.com/maps/search/?api=1&query=Chungmuro%20Station%20Exit%202" target="_blank" rel="noopener">导航到忠武路2号口</a></div></div>
+          <div class="event"><div class="time">16:35–18:30</div><div class="axis"></div><div class="event-card"><h4>南山公园与N首尔塔日落夜景</h4><p>11月1日日落约17:34。南山公园、首尔塔广场及塔内1—4层公共区免费；T5观景台周末约10:00—23:00，成人参考₩29,000，按能见度和排队情况现场决定。</p><a href="https://www.google.com/maps/search/?api=1&query=N%20Seoul%20Tower" target="_blank" rel="noopener">导航到首尔塔</a></div></div>
+          <div class="event"><div class="time">18:30–19:30</div><div class="axis"></div><div class="event-card"><h4>01A下山 → 首尔站分流</h4><p>搭01A返回忠武路方向，再乘4号线到首尔站。3位朋友直接换乘AREX前往仁川T1；情侣乘1号线或打车前往Hotel GMS办理入住。晚餐分别在机场或GMS附近解决，不再全员折返永登浦。</p><a href="https://www.google.com/maps/search/?api=1&query=Seoul%20Station%20AREX" target="_blank" rel="noopener">导航到首尔站AREX</a></div></div>
+          <div class="event"><div class="time">19:30–20:40</div><div class="axis"></div><div class="event-card"><h4>3人前往仁川T1 / 情侣前往GMS</h4><p>3人乘AREX普通列车直达仁川T1，为02:25航班预留充分缓冲；情侣带自己的行李到GMS入住。出发前一天复核AREX当日晚间班次。</p><a href="https://www.google.com/maps/dir/?api=1&origin=Seoul%20Station&destination=Incheon%20International%20Airport%20Terminal%201&travelmode=transit" target="_blank" rel="noopener">机场方向导航</a></div></div>
         </div>
       </article>
 
       <article class="day" id="d3" style="--day-color:#A77D75">
-        <div class="day-top"><div><div class="day-title">11 月 2 日 · 3 人返港 / 情侣二选一</div><div class="day-sub">首尔时间 UTC+9；抵港时间 UTC+8</div></div><div class="day-actions"><button class="map-btn" data-map="map-d3">展开路线</button></div></div>
-        <div class="daily-map" id="map-d3"><div class="route-sketch"><div class="route-stop"><div class="dot"></div>仁川 T1<br>3人返港</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>GMS<br>2人</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>A 江南汉南</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>B 釜山</div></div></div>
+        <div class="day-top"><div><div class="day-title">11 月 2 日 · 3 人返港 / 情侣二选一</div><div class="day-sub">首尔时间 UTC+9；抵港时间 UTC+8 · A江南汉南 / B永登浦汝矣岛</div></div><div class="day-actions"><button class="map-btn" data-map="map-d3">展开路线</button></div></div>
+        <div class="daily-map" id="map-d3"><div class="route-sketch"><div class="route-stop"><div class="dot"></div>仁川 T1<br>3人返港</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>GMS<br>2人</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>A 江南<br>汉南</div><div class="route-seg"></div><div class="route-stop"><div class="dot"></div>B 永登浦<br>汝矣岛</div></div></div>
         <div class="timeline">
           <div class="event"><div class="time">00:00–02:00</div><div class="axis"></div><div class="event-card"><h4>3 人值机、托运与安检</h4><p>UO615 无餐食，建议提前买好零食。</p></div></div>
           <div class="event"><div class="time">02:25</div><div class="axis"></div><div class="event-card"><h4>3 人乘 UO615 返回香港</h4><p>仁川 T1 起飞；香港时间 05:30 抵达 T1。</p></div></div>
         </div>
-        <div class="plans" aria-label="情侣行程方案"><button class="plan-btn active" data-plan="plan-a">A · 首尔逛街</button><button class="plan-btn" data-plan="plan-b">B · 釜山一日游</button></div>
+        <div class="plans" aria-label="情侣行程方案"><button class="plan-btn active" data-plan="plan-a">A · 江南汉南逛街</button><button class="plan-btn" data-plan="plan-b">B · 永登浦汝矣岛</button></div>
         <div class="plan active" id="plan-a">
           <div class="day-actions" style="margin-bottom:8px"><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20GMS%20Seoul&destination=Hotel%20GMS%20Seoul&waypoints=Apgujeong%20Rodeo%7CCheongdam-dong%7CGarosu-gil%7CHannam-dong%7CGyeongnidan-gil">A 方案多点导航</a></div>
           <div class="timeline">
-            <div class="event"><div class="time">10:00–11:15</div><div class="axis"></div><div class="event-card"><h4>早餐后前往狎鸥亭罗德奥</h4><p>2 人打车更舒适；地铁约 35 分钟。</p></div></div>
-            <div class="event"><div class="time">11:15–13:45</div><div class="axis"></div><div class="event-card"><h4>狎鸥亭 10 店单向线</h4><p>Lululemon→VIVAIA DOSAN→Adidas→Matin Kim→Mardi→Glowny→Gentle Monster→Rockfish→Stussy→Alo Yoga。Stussy 尽量上午到；携带护照退税。</p><a href="https://www.google.com/maps/search/?api=1&query=Apgujeong%20Rodeo%20Street" target="_blank" rel="noopener">打开狎鸥亭</a></div></div>
-            <div class="event"><div class="time">13:45–14:45</div><div class="axis"></div><div class="event-card"><h4>狎鸥亭 / 清潭午餐</h4><p>参考 ₩15,000—30,000/人。</p></div></div>
+            <div class="event"><div class="time">10:00–11:15</div><div class="axis"></div><div class="event-card"><h4>早餐后前往狎鸥亭罗德奥</h4><p>2 人打车更舒适；地铁约35分钟。</p></div></div>
+            <div class="event"><div class="time">11:15–13:45</div><div class="axis"></div><div class="event-card"><h4>狎鸥亭 10 店单向线</h4><p>Lululemon→VIVAIA DOSAN→Adidas→Matin Kim→Mardi→Glowny→Gentle Monster→Rockfish→Stussy→Alo Yoga。Stussy尽量上午到；携带护照退税。</p><a href="https://www.google.com/maps/search/?api=1&query=Apgujeong%20Rodeo%20Street" target="_blank" rel="noopener">打开狎鸥亭</a></div></div>
+            <div class="event"><div class="time">13:45–14:45</div><div class="axis"></div><div class="event-card"><h4>狎鸥亭 / 清潭午餐</h4><p>参考₩15,000—30,000/人。</p></div></div>
             <div class="event"><div class="time">14:45–16:15</div><div class="axis"></div><div class="event-card"><h4>清潭洞购物</h4><p>旗舰店和设计师买手店；走路较多，穿舒适鞋。</p></div></div>
             <div class="event"><div class="time">16:45–18:45</div><div class="axis"></div><div class="event-card"><h4>新沙洞林荫道</h4><p>美妆、小众鞋包与咖啡；坡多，注意体力。</p></div></div>
-            <div class="event"><div class="time">19:15–20:00</div><div class="axis"></div><div class="event-card"><h4>汉南洞快速购物</h4><p>Object、Le Prive 与独立设计师品牌。多家店约 20:00 关门，时间紧，不建议临时加点。</p></div></div>
-            <div class="event"><div class="time">20:00–21:30</div><div class="axis"></div><div class="event-card"><h4>经理团路晚餐</h4><p>烤肉、创意韩餐或 24 小时土豆脊骨汤，参考 ₩20,000—35,000/人。</p></div></div>
-            <div class="event"><div class="time">21:30 后</div><div class="axis"></div><div class="event-card"><h4>返回 Hotel GMS</h4><p>打车约 30 分钟；地铁约 35 分钟。</p></div></div>
+            <div class="event"><div class="time">19:15–20:00</div><div class="axis"></div><div class="event-card"><h4>汉南洞快速购物</h4><p>Object、Le Prive与独立设计师品牌。多家店约20:00关门，时间紧，不建议临时加点。</p></div></div>
+            <div class="event"><div class="time">20:00–21:30</div><div class="axis"></div><div class="event-card"><h4>经理团路晚餐</h4><p>烤肉、创意韩餐或24小时土豆脊骨汤，参考₩20,000—35,000/人。</p></div></div>
+            <div class="event"><div class="time">21:30 后</div><div class="axis"></div><div class="event-card"><h4>返回 Hotel GMS</h4><p>打车约30分钟；地铁约35分钟。</p></div></div>
           </div>
         </div>
         <div class="plan" id="plan-b">
-          <div class="day-actions" style="margin-bottom:8px"><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Busan%20Station&destination=Busan%20Station&waypoints=Haeundae%20Beach%7CMipo%20Station%7CCheongsapo%20Station%7CSeomyeon%20Station">B 方案釜山导航</a></div>
+          <div class="day-actions" style="margin-bottom:8px"><a class="map-btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&origin=Hotel%20GMS%20Seoul&destination=Hotel%20GMS%20Seoul&waypoints=Times%20Square%20Seoul%7CShinsegae%20Department%20Store%20Times%20Square%7CThe%20Hyundai%20Seoul%7CIFC%20Mall%20Seoul">B 方案多点导航</a></div>
           <div class="timeline">
-            <div class="event"><div class="time">06:00–07:00</div><div class="axis"></div><div class="event-card"><h4>前往首尔站 <span class="tag book">需提前购票</span></h4><p>发车前至少 15 分钟确认站台；KTX 班次以 Korail 最终出票为准。</p></div></div>
-            <div class="event"><div class="time">07:00–09:30</div><div class="axis"></div><div class="event-card"><h4>KTX 首尔 → 釜山</h4><p>计划车程约 2 小时 30 分，标准座参考 ₩59,800/人。</p></div></div>
-            <div class="event"><div class="time">09:30–12:00</div><div class="axis"></div><div class="event-card"><h4>海云台与天空胶囊 <span class="tag book">必须预约</span></h4><p>官方冬季（11—2 月）运营约 08:30—18:00；预约时间为入场时段，不等于立即发车，现场仍可能等待。建议选择 10:30 左右时段并预留排队。</p><a href="https://www.google.com/maps/search/?api=1&query=Haeundae%20Blueline%20Park%20Mipo%20Station" target="_blank" rel="noopener">导航到尾浦站</a></div></div>
-            <div class="event"><div class="time">12:00–13:30</div><div class="axis"></div><div class="event-card"><h4>青沙浦 / 海云台午餐</h4><p>海鲜面、烤贝、古来思鱼糕，参考 ₩15,000—25,000/人。</p></div></div>
-            <div class="event"><div class="time">13:30–17:30</div><div class="axis"></div><div class="event-card"><h4>前往西面并购物</h4><p>乐天百货、免税店、地下商街和 Olive Young。</p></div></div>
-            <div class="event"><div class="time">17:30–19:00</div><div class="axis"></div><div class="event-card"><h4>西面晚餐</h4><p>猪肉汤饭、密面、辣炒章鱼等，参考 ₩10,000—18,000/人。</p></div></div>
-            <div class="event"><div class="time">20:00–22:30</div><div class="axis"></div><div class="event-card"><h4>KTX 釜山 → 首尔 <span class="tag book">需提前购票</span></h4><p>该方案关键风险是返程票与末段交通；不要购买无法衔接的班次。</p></div></div>
-            <div class="event"><div class="time">22:30–23:00</div><div class="axis"></div><div class="event-card"><h4>首尔站打车回 Hotel GMS</h4><p>约 20 分钟，参考 ₩10,000—15,000。</p></div></div>
+            <div class="event"><div class="time">09:30–10:30</div><div class="axis"></div><div class="event-card"><h4>早餐与慢速出发</h4><p>从GMS步行或短程交通前往永登浦Times Square；今天以室内购物为主。</p></div></div>
+            <div class="event"><div class="time">10:30–12:30</div><div class="axis"></div><div class="event-card"><h4>Times Square 与新世界百货</h4><p>Times Square常规10:30—22:00，适合集中购物和补伴手礼。新世界百货常规周一约10:30—20:00，但百货有月度休店，11月1日晚再查官方公告；如休店，只逛Times Square。</p><a href="https://www.google.com/maps/search/?api=1&query=Times%20Square%20Yeongdeungpo%20Seoul" target="_blank" rel="noopener">导航到Times Square</a></div></div>
+            <div class="event"><div class="time">12:30–13:30</div><div class="axis"></div><div class="event-card"><h4>永登浦午餐</h4><p>Times Square餐厅群或新世界地下食品馆，参考₩15,000—25,000/人。</p></div></div>
+            <div class="event"><div class="time">13:30–14:10</div><div class="axis"></div><div class="event-card"><h4>前往汝矣岛</h4><p>从永登浦市场站乘5号线到汝矣岛站，或购物袋较多时直接打车。</p></div></div>
+            <div class="event"><div class="time">14:10–18:30</div><div class="axis"></div><div class="event-card"><h4>The Hyundai Seoul / IFC Mall</h4><p>The Hyundai Seoul周一至周四常规10:30—20:00，美食街可更晚；百货存在月度休店，出发前一晚查看官方日历。若临时休店，改逛IFC Mall及汝矣岛室内商业区。</p><a href="https://www.google.com/maps/search/?api=1&query=The%20Hyundai%20Seoul" target="_blank" rel="noopener">导航到The Hyundai Seoul</a></div></div>
+            <div class="event"><div class="time">18:30–20:00</div><div class="axis"></div><div class="event-card"><h4>汝矣岛晚餐</h4><p>可选水芹五花肉、猪脚或百货餐厅，参考₩15,000—30,000/人；如购物超时，直接在商场解决。</p></div></div>
+            <div class="event"><div class="time">20:00–20:45</div><div class="axis"></div><div class="event-card"><h4>返回 Hotel GMS</h4><p>地铁5号线汝矣岛→新吉后步行，或购物袋较多时打车返回。</p></div></div>
           </div>
         </div>
       </article>
@@ -336,9 +315,10 @@
       <div class="tips">
         <article class="tip"><h3>红眼航班后的第一天很满</h3><p>预计凌晨 03:30 左右才能休息，上午 10:30 起床后仍排满至 20:30。若体力不足，优先保留梨大、圣水核心店与汉江三者中的两项。</p></article>
         <article class="tip"><h3>梨大官方导览暂停</h3><p>学校官网显示公众及私人导览暂停；普通到访与 ECC 访客区以现场管制为准。不要把“无需预约导览”误解为所有教学区域均可进入。</p></article>
-        <article class="tip"><h3>The Hyundai 不到 22:00 全店营业</h3><p>周日零售区通常至 20:30，餐饮至 22:00。当前行程 13:00—17:30 无冲突，但晚间自由购物不要默认所有店都开到 22:00。</p></article>
+        <article class="tip"><h3>The Hyundai 不到22:00全店营业</h3><p>11月2日为周一，零售区常规约10:30—20:00，餐饮可更晚；百货存在月度休店，必须在11月1日晚查看官方日历，不能只按常规时间判断。</p></article>
         <article class="tip"><h3>汉南洞收尾偏赶</h3><p>A 方案 19:15 才到汉南，而多家店约 20:00 结束营业。只挑 1—2 家核心店，晚餐不要被购物挤压。</p></article>
-        <article class="tip"><h3>釜山一日游必须先锁票</h3><p>B 方案跨城，KTX 去返与天空胶囊均是承重预订。任一关键票无合适时段，就切回 A 方案，不现场碰运气。</p></article>
+        <article class="tip"><h3>11月1日先寄存再游览</h3><p>景福宫站7号出口附近储物柜约05:00—24:00开放。优先用1个大柜放行李箱、1—2个中柜合放双肩包；若大柜已满，立即改用附近可预约人工寄存，不要拖着行李进入宫殿与北村。</p></article>
+        <article class="tip"><h3>11月2日百货休店要复核</h3><p>B方案的Times Square常规全年营业；The Hyundai Seoul与新世界百货存在月度休店。11月1日晚查看官方日历；如临时休店，改逛Times Square、IFC Mall及正常营业的餐饮区域。</p></article>
         <article class="tip"><h3>地图使用策略</h3><p>网页提供 Google 地点与多点导航入口；韩国公共交通、步行路线和店铺定位请用 Naver Map / Kakao Map 复核。</p></article>
       </div>
       <div class="notice-grid" id="noticeList"></div>
@@ -346,8 +326,8 @@
         <strong>核验来源：</strong>
         梨花女子大学校园访问资料：<a href="https://cms.ewha.ac.kr/user/ewhawelcomeen/download/guide_eng.pdf" target="_blank" rel="noopener">官方访问指南</a>、<a href="https://www.ewha.ac.kr/ewhaen/intro/campus-tour.do" target="_blank" rel="noopener">官方校园导览页</a>；
         The Hyundai Seoul：<a href="https://www.ehyundai.com/mobile/DP/cn/branch.do?branchType=10&amp;branchCd=B00140000&amp;lanType=CN" target="_blank" rel="noopener">官方中文营业信息</a>；
-        11月1日路线2：<a href="https://royal.khs.go.kr/CHN/contents/H702000000.do?schGroupCode=gbg&amp;schGroupCodeNm=%E6%99%AF%E7%A6%8F%E5%AE%AB" target="_blank" rel="noopener">景福宫官方开放时间与票价</a>、<a href="https://tchinese.visitseoul.net/area/%E9%80%9A%E4%BB%81%E5%B8%82%E5%A0%B4-CB/TCP000281" target="_blank" rel="noopener">通仁市场官方旅游信息</a>、<a href="https://tout-y-est.com/pages/store" target="_blank" rel="noopener">TOUT Y EST官方门店信息</a>、<a href="https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=93550" target="_blank" rel="noopener">北村韩屋村开放与访问限制</a>、<a href="https://www.seoultower.co.kr/cn/visit/transfers" target="_blank" rel="noopener">南山01A循环巴士</a>、<a href="https://www.seoultower.co.kr/cn/tour/theme03" target="_blank" rel="noopener">首尔塔开放与票价</a>；
-        海云台蓝线公园：<a href="https://www.bluelinepark.com/eng/skyCapsuleTime.do" target="_blank" rel="noopener">官方季节时刻</a>、<a href="https://www.bluelinepark.com/eng/information.do" target="_blank" rel="noopener">官方乘车说明</a>。营业与班次仍以出发前官方最新公告为准。
+        11月1日景福宫路线：<a href="https://royal.khs.go.kr/CHN/contents/H702000000.do?schGroupCode=gbg&amp;schGroupCodeNm=%E6%99%AF%E7%A6%8F%E5%AE%AB" target="_blank" rel="noopener">景福宫官方开放时间与票价</a>、<a href="https://chinese.visitseoul.net/attractions/LuggageStorage4/CNPddzb15" target="_blank" rel="noopener">景福宫站储物柜位置与开放时间</a>、<a href="https://tchinese.visitseoul.net/area/%E9%80%9A%E4%BB%81%E5%B8%82%E5%A0%B4-CB/TCP000281" target="_blank" rel="noopener">通仁市场官方旅游信息</a>、<a href="https://tout-y-est.com/pages/store" target="_blank" rel="noopener">TOUT Y EST官方门店信息</a>、<a href="https://big5chinese.visitkorea.or.kr/svc/contents/contentsView.do?vcontsId=93550" target="_blank" rel="noopener">北村韩屋村开放与访问限制</a>、<a href="https://www.seoultower.co.kr/cn/visit/transfers" target="_blank" rel="noopener">南山01A循环巴士</a>、<a href="https://www.seoultower.co.kr/cn/tour/theme03" target="_blank" rel="noopener">首尔塔开放与票价</a>；
+        11月2日购物B方案：<a href="https://www.timessquare.co.kr/web/m.gate/home?languageId=ko_KR" target="_blank" rel="noopener">Times Square官方营业信息</a>、<a href="https://www.ehyundai.com/DP/lang/en/DP000014.do?branchCd=B00140000" target="_blank" rel="noopener">The Hyundai Seoul官方营业与休店日历</a>。营业时间与休店仍以出发前官方最新公告为准。
       </div>
         </div>
       </details>
@@ -461,11 +441,13 @@
         {name:'梨花女子大学参观', time:'2026-10-31T11:00:00+09:00', label:'10/31 11:00 首尔时间（UTC+9）'},
         {name:'圣水洞购物', time:'2026-10-31T14:00:00+09:00', label:'10/31 14:00 首尔时间（UTC+9）'},
         {name:'汉江公园夜景', time:'2026-10-31T18:00:00+09:00', label:'10/31 18:00 首尔时间（UTC+9）'},
-        {name:'前往 Hotel GMS 寄存行李', time:'2026-11-01T09:30:00+09:00', label:'11/01 09:30 首尔时间（UTC+9）'},
-        {name:'The Hyundai Seoul 购物', time:'2026-11-01T13:00:00+09:00', label:'11/01 13:00 首尔时间（UTC+9）'},
-        {name:'3 人前往仁川机场', time:'2026-11-01T21:30:00+09:00', label:'11/01 21:30 首尔时间（UTC+9）'},
+        {name:'景福宫站寄存行李', time:'2026-11-01T10:00:00+09:00', label:'11/01 10:00 首尔时间（UTC+9）'},
+        {name:'景福宫与北村游览', time:'2026-11-01T11:30:00+09:00', label:'11/01 11:30 首尔时间（UTC+9）'},
+        {name:'南山首尔塔日落', time:'2026-11-01T16:35:00+09:00', label:'11/01 16:35 首尔时间（UTC+9）'},
+        {name:'首尔站分流：3人去机场', time:'2026-11-01T19:30:00+09:00', label:'11/01 19:30 首尔时间（UTC+9）'},
         {name:'UO615：3 人返港', time:'2026-11-02T02:25:00+09:00', label:'11/02 02:25 首尔时间（UTC+9）'},
         {name:'情侣 A/B 方案出发', time:'2026-11-02T10:00:00+09:00', label:'11/02 10:00 首尔时间（UTC+9）'},
+        {name:'购物B方案：Times Square', time:'2026-11-02T10:30:00+09:00', label:'11/02 10:30 首尔时间（UTC+9）'},
         {name:'情侣前往仁川机场', time:'2026-11-03T09:30:00+09:00', label:'11/03 09:30 首尔时间（UTC+9）'},
         {name:'UO619：情侣返港', time:'2026-11-03T12:25:00+09:00', label:'11/03 12:25 首尔时间（UTC+9）'}
       ].map(e=>({...e, ms:new Date(e.time).getTime()}));
